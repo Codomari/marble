@@ -1,0 +1,22 @@
+name: marble
+version: 0.0.1
+
+authors:
+  - Anar K. Jafarov <anar.k.jafarov@gmail.com>
+
+targets:
+  marble-server:
+    main: src/apps/server/main.cr
+
+crystal: ">= 1.21.0"
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 1.6.4
+
+license: MIT
