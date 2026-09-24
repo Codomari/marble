@@ -1,4 +1,3 @@
-require "./config"
 require "./tls"
 
 module Marble::Config
@@ -6,9 +5,9 @@ module Marble::Config
     getter? enabled : Bool
     getter host : String
     getter port : Int32
-    getter tls : Config::Tls?
+    getter tls : Tls?
 
-    def initialize(@enabled : Bool, @host : String, @port : Int32, @tls : Config::Tls? = nil)
+    def initialize(@enabled : Bool, @host : String, @port : Int32, @tls : Tls? = nil)
     end
 
     def enabled : Bool

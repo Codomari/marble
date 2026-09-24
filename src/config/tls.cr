@@ -1,5 +1,3 @@
-require "./config"
-
 module Marble::Config
   class Tls
     getter cert : String

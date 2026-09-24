@@ -1,11 +1,11 @@
-require "./config"
+require "./root"
 
 module Marble::Config
   class Startup
-    getter config : Config
+    getter config : Root
     getter args : Array(String)
 
-    def initialize(@config : Config, @args : Array(String))
+    def initialize(@config : Root, @args : Array(String))
     end
   end
 end

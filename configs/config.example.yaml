@@ -14,14 +14,6 @@ apps:
 
 secret: t5*BAugI@8UeO&nBrLM&VxbHFOGcmot5YPHt$x$DnRAW!HVWeDbBfQ3nROPQ2GE#
 
-database:
-  connection:
-    uri: "couchbase://marble:marble@127.0.0.1/marble"
-
-redis:
-  connection:
-    uri: redis://127.0.0.1:6379/0
-
 storage:
   root: /storage
   users: /storage/users

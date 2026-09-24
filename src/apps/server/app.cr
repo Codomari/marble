@@ -3,7 +3,7 @@ require "./routing/root"
 
 module Marble::Apps::Server
   class App < Marble::Core::ServiceApp
-    def initialize(config : Marble::Config? = nil)
+    def initialize(config : Marble::Config::Root? = nil)
       super("server", "marble-server", config)
     end
 

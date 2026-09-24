@@ -1,7 +1,5 @@
 require "http/server"
 
-module Marble::Core::HTTP
-  abstract class RequestHandler
-    abstract def handle(ctx : ::HTTP::Server::Context)
-  end
+module Marble::Core::HTTP::RequestHandler
+  abstract def handle(ctx : ::HTTP::Server::Context)
 end

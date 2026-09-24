@@ -1,9 +1,9 @@
 require "json"
-require "../lib"
+require "../../marble"
 
 module Marble::Core::Structs
   record ServiceInfo,
-    service : String
+    service : String,
     do
       def status : String
         "ok"

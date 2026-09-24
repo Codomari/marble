@@ -1,9 +1,7 @@
 require "yaml"
-require "./config"
+require "./root"
 require "./app"
 require "./connection"
-require "./database"
-require "./redis"
 require "./secure_server"
 require "./server"
 require "./startup"
@@ -12,46 +10,42 @@ require "./tls"
 
 module Marble::Config
   class Parser
-    def self.parse(path : String) : Config
+    def self.parse(path : String) : Root
       root = YAML.parse(File.read(path))
 
-      Config.new(
+      Root.new(
         {
-          "api"  => parse_app(root, "api"),
-          "chat" => parse_app(root, "chat"),
-          "game" => parse_app(root, "game"),
+          "server"  => parse_app(root, "server"),
         },
-        Config::Database.new(Config::Connection.new(string_at(root, ["database", "connection", "uri"]))),
-        Config::Redis.new(Config::Connection.new(string_at(root, ["redis", "connection", "uri"]))),
         string_at(root, ["secret"]),
-        Config::Storage.new(
+        Storage.new(
           string_at(root, ["storage", "root"]),
           string_at(root, ["storage", "users"])
         )
       )
     end
 
-    private def self.parse_app(root : YAML::Any, name : String) : Config::App
-      Config::App.new(
+    private def self.parse_app(root : YAML::Any, name : String) : App
+      App.new(
         parse_server(root, ["apps", name, "http"]),
         parse_secure_server(root, ["apps", name, "https"])
       )
     end
 
-    private def self.parse_server(root : YAML::Any, path : Array(String)) : Config::Server
-      Config::Server.new(
+    private def self.parse_server(root : YAML::Any, path : Array(String)) : Server
+      Server.new(
         bool_at(root, path + ["enabled"]),
         string_at(root, path + ["host"]),
         int_at(root, path + ["port"])
       )
     end
 
-    private def self.parse_secure_server(root : YAML::Any, path : Array(String)) : Config::SecureServer
-      Config::SecureServer.new(
+    private def self.parse_secure_server(root : YAML::Any, path : Array(String)) : SecureServer
+      SecureServer.new(
         bool_at(root, path + ["enabled"]),
         string_at(root, path + ["host"]),
         int_at(root, path + ["port"]),
-        Config::Tls.new(
+        Tls.new(
           string_at(root, path + ["tls", "cert"]),
           string_at(root, path + ["tls", "key"])
         )

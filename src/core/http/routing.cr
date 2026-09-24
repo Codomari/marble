@@ -1,13 +1,13 @@
 require "kemal"
-require "../../handlers/errors/not_found"
-require "../../handlers/errors/not_implemented"
 require "./request_handler"
+require "../handlers/errors/not_found"
+require "../handlers/errors/not_implemented"
 
 module Marble::Core::HTTP
   abstract class Routing
     def attach : Nil
-      map_not_found Handlers::Errors::NotFound.new
-      map_any "/", Handlers::Errors::NotImplemented.new
+      map_not_found Marble::Core::Handlers::Errors::NotFound.new
+      map_any "/", Marble::Core::Handlers::Errors::NotImplemented.new
     end
 
     protected def map_not_found(handler : RequestHandler) : Nil

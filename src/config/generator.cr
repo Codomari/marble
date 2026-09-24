@@ -1,5 +1,5 @@
 require "file_utils"
-require "./config"
+require "./root"
 require "./example"
 
 module Marble::Config
@@ -10,7 +10,7 @@ module Marble::Config
 
       dirname = File.dirname(path)
       FileUtils.mkdir_p(dirname) unless dirname == "."
-      File.write(path, Config::Example::CONTENT)
+      File.write(path, Example::CONTENT)
     end
   end
 end

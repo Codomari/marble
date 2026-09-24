@@ -1,5 +1,3 @@
-require "./config"
-
 module Marble::Config
   class Connection
     getter uri : String
