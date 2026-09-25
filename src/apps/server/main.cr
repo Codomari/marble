@@ -1,4 +1,6 @@
 require "../../core/runner"
 require "./app"
 
-Marble.run(Marble::Apps::Server::App, ARGV)
+alias ServerApp = Marble::Apps::Server::App
+
+Marble.run(ServerApp, ARGV)

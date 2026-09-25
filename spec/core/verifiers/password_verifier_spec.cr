@@ -2,9 +2,9 @@ require "spec"
 require "../../../src/core/generators/password_hasher"
 require "../../../src/core/verifiers/password_verifier"
 
-alias Password = Crypto::Bcrypt::Password
-alias PasswordHasher = Marble::Core::Generators::PasswordHasher
-alias PasswordVerifier = Marble::Core::Verifiers::PasswordVerifier
+private alias Password = Crypto::Bcrypt::Password
+private alias PasswordHasher = Marble::Core::Generators::PasswordHasher
+private alias PasswordVerifier = Marble::Core::Verifiers::PasswordVerifier
 
 describe Marble::Core::Verifiers::PasswordVerifier do
   it "verifies a password using the configured pepper" do

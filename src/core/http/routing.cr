@@ -5,13 +5,23 @@ require "../handlers/errors/not_implemented"
 
 module Marble::Core::HTTP
   abstract class Routing
+    private alias Errors = Marble::Core::Handlers::Errors
+    private alias RequestHandler = Marble::Core::HTTP::RequestHandler
+
     def attach : Nil
-      map_not_found Marble::Core::Handlers::Errors::NotFound.new
-      map_any "/", Marble::Core::Handlers::Errors::NotImplemented.new
+      map_not_found Errors::NotFound.new
+      map_any "/", Errors::NotImplemented.new
     end
 
     protected def map_not_found(handler : RequestHandler) : Nil
       error 404 do |ctx, _ex|
+        handler.handle(ctx)
+      end
+      nil
+    end
+
+    protected def map_method_not_allowed(handler : RequestHandler) : Nil
+      error 405 do |ctx, _ex|
         handler.handle(ctx)
       end
       nil

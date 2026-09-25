@@ -5,6 +5,8 @@ require "./app"
 
 module Marble::Core
   abstract class ServiceApp < App
+    private alias Cors = Marble::Middlewares::Cors
+
     def run(args : Array(String) = ARGV) : Nil
       configure_app
       attach_routes
@@ -18,7 +20,7 @@ module Marble::Core
       Kemal.config.host_binding = http.host
       Kemal.config.port = http.port
 
-      use Middlewares::Cors.new
+      use Cors.new
     end
 
     protected abstract def attach_routes : Nil

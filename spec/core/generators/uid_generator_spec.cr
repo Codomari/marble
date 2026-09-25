@@ -1,7 +1,7 @@
 require "spec"
 require "../../../src/core/generators/uid_generator"
 
-alias UIDGenerator = Marble::Core::Generators::UIDGenerator
+private alias UIDGenerator = Marble::Core::Generators::UIDGenerator
 
 describe Marble::Core::Generators::UIDGenerator do
   describe "#generate and #decode" do

@@ -39,7 +39,7 @@ module Marble::Config
       )
       raise ArgumentError.new("config path must not be empty") if path.empty?
 
-      Config::Startup.new(Config::Parser.parse(path), remaining_args)
+      Startup.new(Parser.parse(path), remaining_args)
     end
   end
 end

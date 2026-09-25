@@ -1,8 +1,8 @@
 require "spec"
 require "../../../src/core/generators/password_hasher"
 
-alias Password = Crypto::Bcrypt::Password
-alias PasswordHasher = Marble::Core::Generators::PasswordHasher
+private alias Password = Crypto::Bcrypt::Password
+private alias PasswordHasher = Marble::Core::Generators::PasswordHasher
 
 describe Marble::Core::Generators::PasswordHasher do
   it "supports a custom digest when peppering a password" do

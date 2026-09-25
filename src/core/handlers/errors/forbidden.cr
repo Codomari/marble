@@ -1,4 +1,3 @@
-require "json"
 require "../../http/request_handler"
 
 module Marble::Core::Handlers::Errors

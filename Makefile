@@ -1,19 +1,31 @@
-.PHONY: config, build, run, spec
+.PHONY: deps config build run spec clear run-clean
+
+deps:
+	@echo "Installing dependencies..."
+	@shards install
 
 config:
 	@echo "Configuring the project..."
 	@cp configs/config.example.yaml configs/config.yaml
-	@shards install
+
+clear:
+	@echo "Clearing build artifacts..."
+	@rm -rf bin
+	@crystal clear_cache
 
 build:
 	@echo "Building the project..."
 	@mkdir -p bin
 	@crystal build src/apps/server/main.cr -o bin/server
 
-run:
+run: build
 	@echo "Running the server..."
-	@./bin/server
+	@./bin/server --config=configs/config.yaml
+
+run-clean: clear build
+	@echo "Running the server after cleaning..."
+	@./bin/server --config=configs/config.yaml
 
 spec:
 	@echo "Running specs..."
-	@find spec -name "*_spec.cr" -exec crystal spec {} -v \;
+	@crystal spec -v

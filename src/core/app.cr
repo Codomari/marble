@@ -6,17 +6,22 @@ require "./structs/service_info"
 
 module Marble::Core
   abstract class App
-    getter service_info : Structs::ServiceInfo
-    getter uid_generator : Generators::UIDGenerator?
+    private alias Config = Marble::Config::Root
+    private alias Secret = Marble::Core::Secret
+    private alias UIDGenerator = Marble::Core::Generators::UIDGenerator
+    private alias ServiceInfo = Marble::Core::Structs::ServiceInfo
+
+    getter service_info : ServiceInfo
+    getter uid_generator : UIDGenerator?
 
     protected getter app_name : String
 
-    def initialize(@app_name : String, service_name : String, @config : Marble::Config::Root? = nil)
-      @service_info = Structs::ServiceInfo.new(service_name)
+    def initialize(@app_name : String, service_name : String, @config : Config? = nil)
+      @service_info = ServiceInfo.new(service_name)
       @uid_generator = nil
       @config.try do |config|
-        Marble::Core::Secret.init(config.secret)
-        @uid_generator = Generators::UIDGenerator.new(Marble::Core::Secret.secret_key)
+        Secret.init(config.secret)
+        @uid_generator = UIDGenerator.new(Secret.secret_key)
       end
     end
 
@@ -26,7 +31,7 @@ module Marble::Core
 
     protected abstract def configure_app : Nil
 
-    protected def config : Marble::Config::Root
+    protected def config : Config
       @config || raise ArgumentError.new("configuration file is required. Provide --config=path/to/config.yaml.")
     end
   end

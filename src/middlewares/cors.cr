@@ -3,6 +3,8 @@ require "uri"
 
 module Marble::Middlewares
   class Cors
+    private alias Context = ::HTTP::Server::Context
+
     DEFAULT_ALLOWED_HEADERS = "Accept, Authorization, Content-Type, X-Requested-With"
     DEFAULT_ALLOWED_METHODS = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
     DEFAULT_ALLOWED_ORIGINS = "*.marble.local"
@@ -13,7 +15,7 @@ module Marble::Middlewares
     def initialize(@allowed_origins : Array(String) = self.class.default_allowed_origins)
     end
 
-    def call(context : HTTP::Server::Context) : Nil
+    def call(context : Context) : Nil
       apply_headers(context)
 
       if context.request.method == "OPTIONS"
@@ -32,7 +34,7 @@ module Marble::Middlewares
         .reject(&.empty?)
     end
 
-    private def apply_headers(context : HTTP::Server::Context) : Nil
+    private def apply_headers(context : Context) : Nil
       allowed_origin = allowed_origin_for(context.request.headers["Origin"]?)
       return unless allowed_origin
 
@@ -68,7 +70,7 @@ module Marble::Middlewares
       false
     end
 
-    private def allowed_headers_for(context : HTTP::Server::Context) : String
+    private def allowed_headers_for(context : Context) : String
       context.request.headers["Access-Control-Request-Headers"]? || DEFAULT_ALLOWED_HEADERS
     end
 
